@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="addImages">images/oxygen/insert-image.png</file>
+        <file alias="clear">images/oxygen/edit-clear-list.png</file>
+        <file alias="about">images/oxygen/help-about.png</file>
+        <file alias="optimize">images/oxygen/application-zip.png</file>
+        <file alias="close">images/oxygen/dialog-close.png</file>
+        <file alias="configure">images/oxygen/configure.png</file>
+        <file alias="addImages.Watermark">images/oxygen/insert-image-watermark.png</file>
+    </qresource>
+</RCC>
