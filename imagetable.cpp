@@ -1,6 +1,7 @@
 #include "imagetable.h"
 #include "imagedelegate.h"
 #include "optimizer.h"
+#include "tools/general.h"
 
 #include <QApplication>
 #include <QDateTime>
@@ -97,7 +98,7 @@ void ImageTable::addImage(QString file)
   item->setData(qVariantFromValue(image), Qt::UserRole+3);
 
   mModel->appendRow(item);
-  mModel->setData(mModel->index(item->row(), 1), tr("%1 kb").arg(image.size()/1024));
+  mModel->setData(mModel->index(item->row(), 1), representBytes(image.size()));
   mModel->setData(mModel->index(item->row(), 3), "");
   mModel->setData(mModel->index(item->row(), 4), 0);
 
@@ -206,7 +207,7 @@ void ImageTable::optimizationDone(int fileSize, qreal decrease)
 
   // Stats:
   if (fileSize > 0)
-    mSaved += qRound((info.size() - fileSize)/1024.0f);
+    mSaved += (info.size() - fileSize);
 
   if (fileSize == 0)
   {
@@ -218,8 +219,8 @@ void ImageTable::optimizationDone(int fileSize, qreal decrease)
   }
   else
   {
-    mModel->setData(mModel->index(mCurrentOpt-1, 2), tr("%1 kb").arg(fileSize/1024));
-    mModel->setData(mModel->index(mCurrentOpt-1, 3), tr("%1% (-%2 kb)").arg(decrease).arg(qRound((info.size() - fileSize)/1024.0f)));
+    mModel->setData(mModel->index(mCurrentOpt-1, 2), representBytes(fileSize));
+    mModel->setData(mModel->index(mCurrentOpt-1, 3), tr("%1%\n(-%2)").arg(decrease).arg(representBytes((info.size() - fileSize))));
     setRowColor(mCurrentOpt-1, Qt::green);
   }
 

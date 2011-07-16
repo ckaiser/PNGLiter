@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "dialogs/aboutdialog.h"
 #include "dialogs/optionsdialog.h"
+#include "tools/general.h"
 #include "ui_mainwindow.h"
 
 #include <QAction>
@@ -45,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
   // Signals & Slots
   connect(ui->imageTable , SIGNAL(busy(bool)) , this, SLOT(setBusy(bool)));
   connect(ui->imageTable , SIGNAL(ready(bool)), mOptimizeAction, SLOT(setEnabled(bool)));
-  connect(ui->imageTable , SIGNAL(batchDone(int,int)), this, SLOT(showResults(int,int)));
+  connect(ui->imageTable , SIGNAL(batchDone(qint64,int)), this, SLOT(showResults(qint64,int)));
   connect(mOptimizeAction,SIGNAL(triggered()), ui->imageTable, SLOT(optimize()));
   connect(addAction      , SIGNAL(triggered()), this, SLOT(addDialog()));
   connect(clearAction    , SIGNAL(triggered()), ui->imageTable, SLOT(clear()));
@@ -109,16 +110,13 @@ void MainWindow::showOptions()
 }
 
 
-void MainWindow::showResults(int saved, int time)
+void MainWindow::showResults(qint64 saved, int time)
 {
   if (saved >= 0 && saved <= 5) {
     ui->savingsLabel->setText(tr("none"));
   }
-  else if (saved < 1500) {
-    ui->savingsLabel->setText(tr("%1 kb").arg(saved));
-  }
   else {
-    ui->savingsLabel->setText(tr("%1 mb").arg(saved/1024));
+    ui->savingsLabel->setText(representBytes(saved));
   }
 
   QString timeString;

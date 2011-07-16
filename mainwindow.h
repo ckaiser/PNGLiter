@@ -19,7 +19,7 @@ public slots:
     void addDialog();
     void showAbout();
     void showOptions();
-    void showResults(int saved, int time);
+    void showResults(qint64 saved, int time);
     void setBusy(bool busy);
 
 protected:

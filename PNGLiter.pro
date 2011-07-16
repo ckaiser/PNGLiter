@@ -11,14 +11,16 @@ SOURCES += main.cpp \
     optimizer.cpp \
     dialogs/aboutdialog.cpp \
     dialogs/optionsdialog.cpp \
-    tools/qtwin.cpp
+    tools/qtwin.cpp \
+    tools/general.cpp
 HEADERS += mainwindow.h \
     imagetable.h \
     imagedelegate.h \
     optimizer.h \
     dialogs/aboutdialog.h \
     dialogs/optionsdialog.h \
-    tools/qtwin.h
+    tools/qtwin.h \
+    tools/general.h
 FORMS += mainwindow.ui \
     dialogs/aboutdialog.ui \
     dialogs/optionsdialog.ui

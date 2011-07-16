@@ -37,7 +37,7 @@ protected:
 signals:
     void busy(bool isBusy); // Emits true when starting optimization, false when done.
     void ready(bool isReady); // Emits true when it has images to optimize, false otherwise.
-    void batchDone(int saved, int time); // Emits when the current image batch is done.
+    void batchDone(qint64 saved, int time); // Emits when the current image batch is done.
 
 private:
     Optimizer* mOptimizer;
@@ -45,7 +45,7 @@ private:
     QMenu *mContextMenu;
     QElapsedTimer mElapsedTime;
     int mCurrentOpt;
-    int mSaved;
+    qint64 mSaved;
     int mTotal;
     int mPercent;
     bool mReady;
