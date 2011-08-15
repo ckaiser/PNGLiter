@@ -20,16 +20,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // Widgets
   mOptimizeAction = new QAction(QIcon(":/images/optimize"), "&Optimize", this);
+  mOptimizeAction->setEnabled(false);
 
   mActionGroup = new QActionGroup(this);
 
+  mClearAction = new QAction(QIcon(":/images/clear")    , "C&lear", this);
+  mClearAction->setEnabled(false);
+
   QAction *addAction       = new QAction(QIcon(":/images/addImages"), "&Add Images", this);
-  QAction *clearAction     = new QAction(QIcon(":/images/clear")    , "C&lear", this);
   QAction *configureAction = new QAction(QIcon(":/images/configure"), "&Configure", this);
   QAction *aboutAction     = new QAction(QIcon(":/images/about")    , "A&bout", this);
 
   mActionGroup->addAction(addAction);
-  mActionGroup->addAction(clearAction);
+  mActionGroup->addAction(mClearAction);
   mActionGroup->addAction(configureAction);
   mActionGroup->addAction(aboutAction);
 
@@ -38,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->mainToolBar->addAction(mOptimizeAction);
   ui->mainToolBar->addSeparator();
   ui->mainToolBar->addAction(addAction);
-  ui->mainToolBar->addAction(clearAction);
+  ui->mainToolBar->addAction(mClearAction);
   ui->mainToolBar->addSeparator();
   ui->mainToolBar->addAction(configureAction);
   ui->mainToolBar->addAction(aboutAction);
@@ -46,10 +49,13 @@ MainWindow::MainWindow(QWidget *parent) :
   // Signals & Slots
   connect(ui->imageTable , SIGNAL(busy(bool)) , this, SLOT(setBusy(bool)));
   connect(ui->imageTable , SIGNAL(ready(bool)), mOptimizeAction, SLOT(setEnabled(bool)));
+
   connect(ui->imageTable , SIGNAL(batchDone(qint64,int)), this, SLOT(showResults(qint64,int)));
-  connect(mOptimizeAction,SIGNAL(triggered()), ui->imageTable, SLOT(optimize()));
+  connect(mOptimizeAction, SIGNAL(triggered()), ui->imageTable, SLOT(optimize()));
   connect(addAction      , SIGNAL(triggered()), this, SLOT(addDialog()));
-  connect(clearAction    , SIGNAL(triggered()), ui->imageTable, SLOT(clear()));
+  connect(mClearAction   , SIGNAL(triggered()), ui->imageTable, SLOT(clear()));
+  connect(ui->imageTable , SIGNAL(ready(bool)), mClearAction, SLOT(setEnabled(bool)));
+
   connect(configureAction, SIGNAL(triggered()), this, SLOT(showOptions()));
   connect(aboutAction    , SIGNAL(triggered()), this, SLOT(showAbout()));
 
@@ -101,8 +107,7 @@ void MainWindow::showOptions()
 {
   OptionsDialog *optionsDialog = new OptionsDialog(this);
 
-  if (optionsDialog->exec() == QDialog::Accepted)
-  {
+  if (optionsDialog->exec() == QDialog::Accepted) {
     ui->imageTable->renewOptionsCache();
   }
 
@@ -141,7 +146,6 @@ void MainWindow::showResults(qint64 saved, int time)
 void MainWindow::setBusy(bool busy)
 {
   mActionGroup->setDisabled(busy);
-  mOptimizeAction->setEnabled(true);
 
   disconnect(mOptimizeAction, SIGNAL(triggered()), ui->imageTable, SLOT(stop()));
   disconnect(mOptimizeAction, SIGNAL(triggered()), ui->imageTable, SLOT(optimize()));
@@ -149,6 +153,7 @@ void MainWindow::setBusy(bool busy)
   if (busy) {
     mOptimizeAction->setText("&Abort");
     mOptimizeAction->setIcon(QIcon(":/images/close"));
+    mOptimizeAction->setEnabled(true);
     connect(mOptimizeAction, SIGNAL(triggered()), ui->imageTable, SLOT(stop()));
   }
   else {

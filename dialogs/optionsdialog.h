@@ -16,6 +16,7 @@ public:
 private slots:
     void saveOptions();
     void browse();
+    void openUrl(QString url);
 
 protected:
     void changeEvent(QEvent *e);

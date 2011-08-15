@@ -20,7 +20,7 @@
    <string>About - PNGLiter</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../pngliter.qrc">
     <normaloff>:/images/about</normaloff>:/images/about</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -73,7 +73,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="mainLabel">
      <property name="text">
       <string>PNGLiter is a graphical interface to &lt;a href=&quot;http://optipng.sourceforge.net&quot;&gt;OptiPNG&lt;/a&gt;, which reduce the size of image files without loss of quality.&lt;br&gt;
 Made by &lt;a href=&quot;http://ckaiser.com.ar&quot;&gt;Christian Kaiser&lt;/a&gt;.&lt;br&gt;
@@ -114,9 +114,9 @@ Released under the GNU GPL, &lt;a href=&quot;http://www.gnu.org/licenses/old-lic
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="urlLabel">
      <property name="text">
-      <string>&lt;a href=&quot;http://pngliter.sourceforge.net&quot;&gt;http://pngliter.sourceforge.net&lt;/a&gt;</string>
+      <string>&lt;a href=&quot;https://github.com/ckaiser/PNGLiter&quot;&gt;https://github.com/ckaiser/PNGLiter&lt;/a&gt;</string>
      </property>
      <property name="textFormat">
       <enum>Qt::RichText</enum>
@@ -151,7 +151,9 @@ Released under the GNU GPL, &lt;a href=&quot;http://www.gnu.org/licenses/old-lic
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../pngliter.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

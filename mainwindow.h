@@ -29,6 +29,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     QAction *mOptimizeAction;
+    QAction *mClearAction;
     QActionGroup *mActionGroup;
 };
 

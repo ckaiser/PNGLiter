@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>257</height>
+    <width>307</width>
+    <height>247</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,16 +36,28 @@
          <property name="title">
           <string>PNG Options</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="levelTLabel">
             <property name="text">
              <string>Optimization Level:</string>
             </property>
+            <property name="buddy">
+             <cstring>levelSlider</cstring>
+            </property>
            </widget>
           </item>
           <item row="0" column="1">
            <widget class="QSlider" name="levelSlider">
+            <property name="whatsThis">
+             <string>The optimization level 0 enables a set of optimization operations that require minimal effort. There will be no changes to image attributes like bit depth or color type, and no recompression of existing IDAT datastreams.
+The optimization level 1 enables a single IDAT compression trial. The trial chosen is what OptiPNG thinks it’s probably the most effective.
+The optimization levels 2 and higher enable multiple IDAT compression trials; the higher the level, the more trials.
+The behavior and the default value of this option may change across different program versions. </string>
+            </property>
             <property name="maximum">
              <number>7</number>
             </property>
@@ -79,6 +91,12 @@
           </item>
           <item row="3" column="0">
            <widget class="QCheckBox" name="errorRecoveryCheckBox">
+            <property name="whatsThis">
+             <string>Enable error recovery. This option has no effect on valid input files.
+
+The program will spend a reasonable amount of effort to recover as much data as possible, without increasing the output file size, but the success cannot be generally guaranteed. The program may even increase the file size, e.g., by reconstructing missing critical data. Under this option, integrity shall take precedence over file size.
+When this option is not used, the invalid input files are left unprocessed.</string>
+            </property>
             <property name="text">
              <string>Error recovery</string>
             </property>
@@ -92,6 +110,9 @@
          <property name="title">
           <string>Output</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <property name="checkable">
           <bool>true</bool>
          </property>
@@ -103,6 +124,9 @@
            <widget class="QLabel" name="outputLabel">
             <property name="text">
              <string>Directory:</string>
+            </property>
+            <property name="buddy">
+             <cstring>directoryEdit</cstring>
             </property>
            </widget>
           </item>
@@ -126,6 +150,9 @@
        <string>Advanced</string>
       </attribute>
       <layout class="QVBoxLayout" name="advancedLayout">
+       <property name="spacing">
+        <number>9</number>
+       </property>
        <item>
         <widget class="QLabel" name="advancedLabel">
          <property name="text">
@@ -161,6 +188,9 @@ These commands are avaiable here:
         <widget class="QGroupBox" name="advancedGroupBox">
          <property name="title">
           <string>Advanced Options</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
          <property name="checkable">
           <bool>true</bool>

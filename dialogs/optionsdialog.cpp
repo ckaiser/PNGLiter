@@ -4,6 +4,8 @@
 
 #include <QSettings>
 #include <QFileDialog>
+#include <QDesktopServices>
+#include <QUrl>
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
@@ -11,15 +13,14 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  /*
-  if (QSysInfo::windowsVersion() > QSysInfo::WV_VISTA
-      && QtWin::isCompositionEnabled()) {
-    QtWin::extendFrameIntoClientArea(this);
-  }*/
+  if (QtWin::isCompositionEnabled() && QtWin::extendFrameIntoClientArea(this)) {
+    layout()->setMargin(2);
+  }
 
   connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveOptions()));
   connect(ui->browseButton, SIGNAL(clicked()), this, SLOT(browse()));
   connect(ui->advancedGroupBox, SIGNAL(toggled(bool)), ui->generalTab, SLOT(setDisabled(bool)));
+  connect(ui->advancedLabel, SIGNAL(linkActivated(QString)), this, SLOT(openUrl(QString)));
 
   // Loading
   QSettings settings;
@@ -68,6 +69,11 @@ void OptionsDialog::browse()
 
   if (!dir.isEmpty())
     ui->directoryEdit->setText(dir);
+}
+
+void OptionsDialog::openUrl(QString url)
+{
+  QDesktopServices::openUrl(QUrl(url));
 }
 
 void OptionsDialog::changeEvent(QEvent *e)

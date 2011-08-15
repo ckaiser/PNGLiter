@@ -13,6 +13,9 @@ public:
     AboutDialog(QWidget *parent = 0);
     ~AboutDialog();
 
+private slots:
+    void openUrl(QString url);
+
 protected:
     void changeEvent(QEvent *e);
 

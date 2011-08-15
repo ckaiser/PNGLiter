@@ -121,10 +121,14 @@ void ImageTable::addImages(QStringList images)
 {
   QString image;
 
+  qobject_cast<QWidget*>(parent()->parent())->setEnabled(false);
+
   foreach (image, images) {
     addImage(image);
     qApp->processEvents();
   }
+
+  qobject_cast<QWidget*>(parent()->parent())->setEnabled(true);
 }
 
 void ImageTable::renewOptionsCache()
@@ -267,12 +271,14 @@ void ImageTable::dragLeaveEvent(QDragLeaveEvent *event)
 
 void ImageTable::dropEvent(QDropEvent *event)
 {
-  QUrl url;
+  QStringList urls;
 
-  foreach (url, event->mimeData()->urls()) {
-    addImage(url.toLocalFile());
-    qApp->processEvents();
+  foreach(QUrl url, event->mimeData()->urls())
+  {
+    urls << url.toLocalFile();
   }
+
+  addImages(urls);
 }
 
 void ImageTable::keyPressEvent(QKeyEvent *event)
