@@ -7,7 +7,7 @@ QString representBytes(qint64 bytes) {
   qreal gb = 1024 * mb;
 
   if (bytes < kb) {
-    return qApp->tr("%1 b").arg(bytes);
+    return qApp->tr("%1 bytes").arg(bytes);
   }
   else if (bytes < mb) {
     return qApp->tr("%1 kb").arg(qRound(bytes/kb));
